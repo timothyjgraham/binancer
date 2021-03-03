@@ -717,6 +717,14 @@ binance_new_order <- function(symbol, side, type, time_in_force, quantity, price
 
     # get filters and check
     filters <- binance_filters(symbol)
+    
+        #if (filters[filterType == "MARKET_LOT_SIZE", minQty] == 0) {
+        #    filters[which(filters$filterType == "MARKET_LOT_SIZE")]$minQty <- 1
+        #}
+        if (filters[filterType == "MARKET_LOT_SIZE", stepSize] == 
+            0) {
+            filters[which(filters$filterType == "MARKET_LOT_SIZE")]$stepSize <- 1e-11
+        }
 
     stopifnot(quantity >= filters[filterType == 'LOT_SIZE', minQty],
               quantity <= filters[filterType == 'LOT_SIZE', maxQty])
